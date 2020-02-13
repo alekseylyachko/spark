@@ -28,9 +28,9 @@ public class App {
                 .getOrCreate();
 
 
-        Load.load(session, 5, filepath);
+        // Load.load(session, 5, filepath);
 
-        // Count.count(appname, master, session, 5, filepath);
+        Count.count(appname, master, session, 5, filepath);
         
     
 
