@@ -1,10 +1,10 @@
-#HOWTO
+# HOWTO
 
-##RUN WITH GRADLE 
+## RUN WITH GRADLE 
 
 gradle gradleRun
 
-##RUN WITH SPARK
+## RUN WITH SPARK
 
 gradle sparkRun
 
