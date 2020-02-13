@@ -5,45 +5,35 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.sql.SparkSession;
 
-import org.apache.spark.sql.types.StructType;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
+import java.lang.String;
+
+import temp.Load;
+
 
 /**
  * Hello world!
  */
 public class App {
+
+    public static long nodeCount = 5;
+
     public static void main(String[] args) throws InterruptedException {
 
 
         SparkSession session = SparkSession
                 .builder()
                 .appName("SparkJavaExample")
-                .master("local[3]")
+                .master("local[" + nodeCount + "]")
                 .getOrCreate();
 
-        StructType schema = new StructType()
-                .add("name", "string")
-                .add("region", "string")
-                .add("date", "string")
-                .add("value", "string");
-
-        Dataset<Row> dataset = session.read()
-                .option("mode", "DROPMALFORMED")
-                .schema(schema)
-                .csv("./dataset.csv");
-
-        dataset.createOrReplaceTempView("sber");
-
-        Dataset<Row> sqlResult = session.sql(
-            "SELECT DISTINCT region " 
-        + " FROM sber GROUP BY region ");
-
-        sqlResult.show(); //for testing
+        // JavaSparkContext context = new JavaSparkContext(session.sparkContext());
+        // spark.
 
 
+        Load.load(session, 5, "./dataset.csv");
 
-        try (JavaSparkContext context = new JavaSparkContext(session.sparkContext())) {
+
+        // try (JavaSparkContext context = new JavaSparkContext(session.sparkContext())) {
         //     JavaRDD<Integer> javaRDD = context.parallelize(integers, 3);
 
         //     javaRDD
@@ -51,10 +41,8 @@ public class App {
 
         //          System.out.println("Java RDD:" + integer);
         //          Thread.sleep(3000);
-        //             });
 
         //     Thread.sleep(1000000);
         //     context.stop();
-        }
     }
 }
