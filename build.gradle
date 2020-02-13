@@ -28,9 +28,26 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 
 	compile "org.apache.spark:spark-sql_2.11:2.3.0"
+
+    compile "org.apache.spark:spark-core_2.11:2.3.0"
 }
 
 application {
     // Define the main class for the application.
     mainClassName = 'temp.App'
+}
+
+
+task sparkRun(type: Exec) { 
+        commandLine 'spark-submit',
+                    '--class',
+                    'temp.App',
+                    '/home/alexey/Documents/temp/build/libs/temp.jar',
+                    '--master local[3]'
+}
+
+task gradleRun(type: Exec) { 
+        commandLine 'gradle', 
+                    'build',
+                    'run'
 }
