@@ -21,7 +21,7 @@ public class Load {
         Dataset<Row> dataset = session.read()
                 .option("mode", "DROPMALFORMED")
                 .schema(schema)
-                .csv("./dataset.csv");
+                .csv(filepath);
 
         long rowCount = dataset.count();
         long singeBatchCount = rowCount / nodeCount;

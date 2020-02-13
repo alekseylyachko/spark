@@ -39,6 +39,7 @@ application {
 
 
 task sparkRun(type: Exec) { 
+
         commandLine 'spark-submit',
                     '--class',
                     'temp.App',
@@ -47,7 +48,9 @@ task sparkRun(type: Exec) {
 }
 
 task gradleRun(type: Exec) { 
+        
         commandLine 'gradle', 
                     'build',
                     'run'
 }
+

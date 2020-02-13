@@ -1,13 +1,11 @@
 package temp;
 
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.VoidFunction;
 import org.apache.spark.sql.SparkSession;
 
 import java.lang.String;
 
 import temp.Load;
+import temp.Count;
 
 
 /**
@@ -16,21 +14,28 @@ import temp.Load;
 public class App {
 
     public static long nodeCount = 5;
+    public static String filepath = "./dataset.csv";
+    public static String master = "local[" + nodeCount + "]";
+    public static String appname = "SparkJavaExample";
 
     public static void main(String[] args) throws InterruptedException {
 
 
         SparkSession session = SparkSession
                 .builder()
-                .appName("SparkJavaExample")
-                .master("local[" + nodeCount + "]")
+                .appName(appname)
+                .master(master)
                 .getOrCreate();
 
-        // JavaSparkContext context = new JavaSparkContext(session.sparkContext());
-        // spark.
 
+        Load.load(session, 5, filepath);
 
-        Load.load(session, 5, "./dataset.csv");
+        // Count.count(appname, master, session, 5, filepath);
+        
+    
+
+    
+
 
 
         // try (JavaSparkContext context = new JavaSparkContext(session.sparkContext())) {
