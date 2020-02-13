@@ -31,23 +31,5 @@ public class App {
         // Load.load(session, 5, filepath);
 
         Count.count(appname, master, session, 5, filepath);
-        
-    
-
-    
-
-
-
-        // try (JavaSparkContext context = new JavaSparkContext(session.sparkContext())) {
-        //     JavaRDD<Integer> javaRDD = context.parallelize(integers, 3);
-
-        //     javaRDD
-        //             .foreach((VoidFunction<Integer>) integer -> {
-
-        //          System.out.println("Java RDD:" + integer);
-        //          Thread.sleep(3000);
-
-        //     Thread.sleep(1000000);
-        //     context.stop();
     }
 }
