@@ -20,13 +20,26 @@
 
 4. Download 'hadoop-2.8.5.tar.gz' from [link](https://archive.apache.org/dist/hadoop/common/hadoop-2.8.5/) and exopt it to hadoop folder
 
+	**In your's current user Download folder:**
+
+		$ tar xf hadoop-2.8.5.tar.gz -d ../../hadoop
+	
+	**Add hadoop user rights:**
+
+		$ sudo chgrp -R hadoop /home/hadoop/hadoop-2.8.5/
+
+		$ sudo chmod -R g+rw /home/hadoop/hadoop-2.8.5/
+
+	**Login as hadoop:**
+
+		$ su - hadoop 
+
 	**In /home/hadoop:**
 
 		$ mkdir hadoop
 
-	**In /home/hadoop/Downloads:**
-
-		$ tar xf hadoop-2.8.5.tar.gz -d ../hadoop
+		$ mv hadoop-2.8.5 hadoop/
+		
 
 5. Also create 'temp/hadooptmpdata', 'hdfs/datanode' and 'hdfs/namenode' in hadoop folder
 
