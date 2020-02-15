@@ -2,13 +2,13 @@
 
 ## HADOOP
 
-1. Adding user:
+1. **Adding user:**
 
 		$ adduser hadoop
 
-2. Install and add to PATH jdk v8
+2. **Install and add to PATH jdk v8**
 
-3. Configure ssh
+3. **Configure ssh**
 
 		$ sudo apt-get install openssh-server openssh-client
 
@@ -18,13 +18,13 @@
 
 		$ ssh localhost
 
-4. Download Hadoop
+4. **Download Hadoop**
 
-	**Login as hadoop:**
+	Login as hadoop:
 
 		$ su - hadoop 
 
-	**In /home/hadoop:**
+	In /home/hadoop:
 
 		$ wget https://archive.apache.org/dist/hadoop/common/hadoop-2.8.5/hadoop-2.8.5.tar.gz
 
@@ -35,17 +35,17 @@
 		$ mv hadoop-2.8.5 hadoop/
 		
 
-5. Also create 'temp/hadooptmpdata', 'hdfs/datanode' and 'hdfs/namenode' in hadoop folder
+5. **Also create 'temp/hadooptmpdata', 'hdfs/datanode' and 'hdfs/namenode' in hadoop folder**
 
-	**In /home/hadoop/hadoop:**
+	In /home/hadoop/hadoop:
 
 		$ mkdir -p hdfs/namenode
 		$ mkdir -p hdfs/datanode
 		$ mkdir -p temp/hadooptmpdata
 
-6. Alter PATH
+6. **Alter PATH**
 
-	**Add to the end of '.bashrc' file in /home/hadoop:**
+	Add to the end of '.bashrc' file in /home/hadoop:
 
 		export HADOOP_HOME=/home/hadoop/hadoop/hadoop-2.8.5
 		export HADOOP_INSTALL=$HADOOP_HOME
@@ -57,16 +57,16 @@
 		export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 		export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 
-7. Configure 'hadoop/etc/hadoop/hadoop-env.sh'
+7. **Configure 'hadoop/etc/hadoop/hadoop-env.sh'**
 
-	**Make the following changes:**
+	Make the following changes:
 
 		export JAVA_HOME= path_to_jdk_8
 		export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/home/hadoop/hadoop/hadoop-2.8.5/etc/hadoop"}
 
-8. Configure 'hadoop/etc/hadoop/core-site.xml'
+8. **Configure 'hadoop/etc/hadoop/core-site.xml'**
 
-	**Make the following changes:**
+	Make the following changes:
 
 		<configuration>
 		<property>
@@ -79,9 +79,9 @@
 		</property>
 		</configuration>
 
-9. Configure 'hadoop/etc/hadoop/hdfs-site.xml'
+9. **Configure 'hadoop/etc/hadoop/hdfs-site.xml'**
 
-	**Make the following changes:**
+	Make the following changes:
 
 		<configuration>
 		<property>
@@ -94,13 +94,13 @@
 		</property>
 		</configuration>
 
-10. Configure 'hadoop/etc/hadoop/mapred-site.xml'
+10. **Configure 'hadoop/etc/hadoop/mapred-site.xml'**
 
-	**Create:**
+	Create:
 
 		$ cp mapred-site.xml.template mapred-site.xml
 
-	**Make the following changes:**
+	Make the following changes:
 
 		<configuration>
 		<property>
@@ -109,7 +109,7 @@
 		</property>
 		</configuration>
 
-11. Configure 'hadoop/etc/hadoop/yarn-site.xml'
+11. **Configure 'hadoop/etc/hadoop/yarn-site.xml'**
 
 		<configuration>
 		<property>
@@ -118,45 +118,45 @@
 		</property>
 		</configuration>
 
-12. Start hadoop
+12. **Start hadoop**
 	
-	**Format namenode:**
+	Format namenode:
 
 		$ hdfs namenode -format
 
-	**Run filesystem:**
+	Run filesystem:
 
 		$ start-dfs.sh
 
-	**Run yarn:**
+	Run yarn:
 
 		$ start-yarn.sh
 
-	**Check if running:**
+	Check if running:
 
 		$ jps
 
-13. HDFS Command Line Interface
+13. **HDFS Command Line Interface**
 
-	**Create test folders**
+	Create test folders
 
 		$ hdfs dfs -mkdir /test
 		$ hdfs dfs -ls /
 
 
 
-14. Access from browser
+14. **Access from browser**
 	
-	**Open [Yarn](0.0.0.0:50070)**
+	Open [Yarn](0.0.0.0:50070)
 
-	**Open [Hadoop](0.0.0.0:8088)**
+	Open [Hadoop](0.0.0.0:8088)
 	
 ## HIVE
 
 
-3. Download Hive
+3. **Download Hive**
 
-	**In /home/hadoop/ use:**
+	In /home/hadoop/ use:
 
 		$ wget http://apache-mirror.rbc.ru/pub/apache/hive/stable-2/apache-hive-2.3.6-bin.tar.gz
 
