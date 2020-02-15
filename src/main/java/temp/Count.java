@@ -19,7 +19,6 @@ public class Count {
       String region;
       String date;
       String value;
-      // constructor , getters and setters
     }
 
     public static void count(String appname, String master, SparkSession session, long nodeCount, String filepath) {
