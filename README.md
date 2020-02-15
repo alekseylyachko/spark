@@ -18,23 +18,17 @@
 
 		$ ssh localhost
 
-4. Download 'hadoop-2.8.5.tar.gz' from [link](https://archive.apache.org/dist/hadoop/common/hadoop-2.8.5/) and exopt it to hadoop folder
-
-	**In your's current user Download folder:**
-
-		$ tar xf hadoop-2.8.5.tar.gz -d ../../hadoop
-	
-	**Add hadoop user rights:**
-
-		$ sudo chgrp -R hadoop /home/hadoop/hadoop-2.8.5/
-
-		$ sudo chmod -R g+rw /home/hadoop/hadoop-2.8.5/
+4. Download Hadoop
 
 	**Login as hadoop:**
 
 		$ su - hadoop 
 
 	**In /home/hadoop:**
+
+		$ wget https://archive.apache.org/dist/hadoop/common/hadoop-2.8.5/hadoop-2.8.5.tar.gz
+
+		$ tar xf hadoop-2.8.5.tar.gz
 
 		$ mkdir hadoop
 
@@ -63,14 +57,14 @@
 		export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 		export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 
-7. Configure hadoop/etc/hadoop/hadoop-env.sh
+7. Configure 'hadoop/etc/hadoop/hadoop-env.sh'
 
 	**Make the following changes:**
 
 		export JAVA_HOME= path_to_jdk_8
 		export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/home/hadoop/hadoop/hadoop-2.8.5/etc/hadoop"}
 
-8. Configure hadoop/etc/hadoop/core-site.xml
+8. Configure 'hadoop/etc/hadoop/core-site.xml'
 
 	**Make the following changes:**
 
@@ -85,7 +79,7 @@
 		</property>
 		</configuration>
 
-9. Configure hadoop/etc/hadoop/hdfs-site.xml
+9. Configure 'hadoop/etc/hadoop/hdfs-site.xml'
 
 	**Make the following changes:**
 
@@ -100,7 +94,7 @@
 		</property>
 		</configuration>
 
-10. Configure hadoop/etc/hadoop/mapred-site.xml
+10. Configure 'hadoop/etc/hadoop/mapred-site.xml'
 
 	**Create:**
 
@@ -115,7 +109,7 @@
 		</property>
 		</configuration>
 
-11. Configure hadoop/etc/hadoop/yarn-site.xml
+11. Configure 'hadoop/etc/hadoop/yarn-site.xml'
 
 		<configuration>
 		<property>
@@ -160,9 +154,19 @@
 ## HIVE
 
 
-Download from [link](http://apache-mirror.rbc.ru/pub/apache/hive/stable-2/)
+3. Download Hive
 
-# RUN WITH GRADLE 
+	**In /home/hadoop/ use:**
+
+		$ wget http://apache-mirror.rbc.ru/pub/apache/hive/stable-2/apache-hive-2.3.6-bin.tar.gz
+
+		$ tar xf apache-hive-2.3.6-bin.tar.gz
+
+		$ mkdir hive
+
+		$ mv apache-hive-2.3.6-bin hive/
+
+# RUN WITH GRADLE
 
 
 
