@@ -68,7 +68,7 @@
 		</property>
 		<property>
 		<name>hadoop.tmp.dir</name>
-		<value>/home/hadoop/hadoop/hadooptmpdata</value>
+		<value>/home/hadoop/hadoop/temp/hadooptmpdata</value>
 		</property>
 		</configuration>
 
