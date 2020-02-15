@@ -144,7 +144,6 @@
 		$ hdfs dfs -ls /
 
 
-
 14. **Access from browser**
 	
 	Open [Yarn](0.0.0.0:50070)
@@ -153,10 +152,13 @@
 	
 ## HIVE
 
+1. **Make sure hadoop is installed**
 
-3. **Download Hive**
+		$ hadoop version
 
-	In /home/hadoop/ use:
+2. **Download Hive**
+
+	In /home/hadoop/ run:
 
 		$ wget http://apache-mirror.rbc.ru/pub/apache/hive/stable-2/apache-hive-2.3.6-bin.tar.gz
 
@@ -165,6 +167,99 @@
 		$ mkdir hive
 
 		$ mv apache-hive-2.3.6-bin hive/
+
+3. **Alter PATH**
+
+	Add to the end of .bashrc:
+
+		export HIVE_HOME=/home/hadoop/hive/apache-hive-2.3.6-bin/
+		export PATH=$PATH:$HIVE_HOME/bin
+		export CLASSPATH=$CLASSPATH:/usr/local/Hadoop/lib/*:.
+		export CLASSPATH=$CLASSPATH:/usr/local/hive/lib/*:.
+
+4. **Configure 'apache-hive-2.3.6-bin/conf/hive-env.sh'**
+
+	Create:
+
+		$ cp hive-env.sh.template hive-env.sh
+
+	Make the following changes:
+
+		export HADOOP_HOME=/home/hadoop/hadoop/hadoop-2.8.5
+
+5. **Verify**
+
+	Run Hadoop:
+
+		$ start-dfs.sh
+
+	Run Yarn:
+
+		$ start-yarn.sh
+
+	Run Hive:
+
+		$ hive
+
+	In shell:
+
+		\> show tables; 
+
+<!-- 5. **Install Derby**
+
+	Just as IN 1:
+
+		$ wget http://archive.apache.org/dist/db/derby/db-derby-10.4.2.0/db-derby-10.4.2.0-bin.tar.gz
+
+
+	The rest is as follows. Target folder structure is /home/hadoop/derby/db-derby-10.4.2.0-bin
+
+6. **Alter PATH**
+
+	Add to the end of .bashrc:
+
+		export DERBY_HOME=/home/hadoop/derbry/db-derby-10.4.2.0-bin/
+		export PATH=$PATH:$DERBY_HOME/bin
+		export CLASSPATH=$CLASSPATH:$DERBY_HOME/lib/derby.jar:$DERBY_HOME/lib/derbytools.jar
+
+7. **Create folder 'data'**
+
+		$ mkdir $DERBY_HOME/data
+
+8. **Configure Hive**
+
+	Create:
+
+		$ cd $HIVE_HOME/conf
+		$ cp hive-default.xml.template hive-site.xml
+
+	Edit 'hive-site.xml' (add between conf):
+
+		<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:derby://localhost:1527/metastore_db;create=true </value>
+		<description>JDBC connect string for a JDBC metastore </description>
+		</property>
+
+	Create a file named 'jpox.properties and add to it':
+
+		javax.jdo.PersistenceManagerFactoryClass =
+
+		org.jpox.PersistenceManagerFactoryImpl
+		org.jpox.autoCreateSchema = false
+		org.jpox.validateTables = false
+		org.jpox.validateColumns = false
+		org.jpox.validateConstraints = false
+		org.jpox.storeManagerType = rdbms
+		org.jpox.autoCreateSchema = true
+		org.jpox.autoStartMechanismMode = checked
+		org.jpox.transactionIsolation = read_committed
+		javax.jdo.option.DetachAllOnCommit = true
+		javax.jdo.option.NontransactionalRead = true
+		javax.jdo.option.ConnectionDriverName = org.apache.derby.jdbc.ClientDriver
+		javax.jdo.option.ConnectionURL = jdbc:derby://hadoop1:1527/metastore_db;create = true
+		javax.jdo.option.ConnectionUserName = APP
+		javax.jdo.option.ConnectionPassword = mine -->
 
 # RUN WITH GRADLE
 
