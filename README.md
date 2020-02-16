@@ -57,14 +57,14 @@
 		export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
 		export HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
 
-7. **Configure 'hadoop/etc/hadoop/hadoop-env.sh'**
+7. **Configure 'hadoop/hadoop-2.8.5/etc/hadoop/hadoop-env.sh'**
 
 	Make the following changes:
 
 		export JAVA_HOME= path_to_jdk_8
 		export HADOOP_CONF_DIR=${HADOOP_CONF_DIR:-"/home/hadoop/hadoop/hadoop-2.8.5/etc/hadoop"}
 
-8. **Configure 'hadoop/etc/hadoop/core-site.xml'**
+8. **Configure 'hadoop/hadoop-2.8.5/etc/hadoop/core-site.xml'**
 
 	Make the following changes:
 
@@ -186,8 +186,79 @@
 	Make the following changes:
 
 		export HADOOP_HOME=/home/hadoop/hadoop/hadoop-2.8.5
+5. **Configure 'apache-hive-2.3.6-bin/conf/hive-env.sh'**
 
-5. **Verify**
+	Create:
+
+		$ cp hive/apache-hive-2.3.6-bin/conf/hive-default.xml.template hive/apache-hive-2.3.6-bin/conf/hive-site.xml
+
+	Replace inside with:
+
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		<?xml-stylesheet type="text/xsl" href="configuration.xsl"?><!--
+		Licensed to the Apache Software Foundation (ASF) under one or more
+		contributor license agreements. See the NOTICE file distributed with
+		this work for additional information regarding copyright ownership.
+		The ASF licenses this file to You under the Apache License, Version 2.0
+		(the "License"); you may not use this file except in compliance with
+		the License. You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+		Unless required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+		See the License for the specific language governing permissions and
+		limitations under the License.-->
+		<configuration>
+		<property>
+		<name>javax.jdo.option.ConnectionURL</name>
+		<value>jdbc:derby:;databaseName=/home/hadoop/hive/metastore_db;create=true</value>
+		<description>
+		JDBC connect string for a JDBC metastore.
+		To use SSL to encrypt/authenticate the connection, provide database-specific SSL flag in the connection URL.
+		For example, jdbc:postgresql://myhost/db?ssl=true for postgres database.
+		</description>
+		</property>
+		<property>
+		<name>hive.metastore.warehouse.dir</name>
+		<value>/user/hive/warehouse</value>
+		<description>location of default database for the warehouse</description>
+		</property>
+		<property>
+		<name>hive.metastore.uris</name>
+		<value/>
+		<description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.</description>
+		</property>
+		<property>
+		<name>javax.jdo.option.ConnectionDriverName</name>
+		<value>org.apache.derby.jdbc.EmbeddedDriver</value>
+		<description>Driver class name for a JDBC metastore</description>
+		</property>
+		<property>
+		<name>javax.jdo.PersistenceManagerFactoryClass</name>
+		<value>org.datanucleus.api.jdo.JDOPersistenceManagerFactory</value>
+		<description>class implementing the jdo persistence</description>
+		</property>
+		</configuration>
+
+6. **Configure hdfs**
+
+		$ hdfs dfs -mkdir -p /user/hive/warehouse
+
+		$ hdfs dfs -mkdir /tmp
+
+		$ hdfs dfs -chmod g+w /user/hive/warehouse
+
+		$ hdfs dfs -chmod g+w /tmp
+
+7. **Init Derby**
+
+	Run configuration:
+
+		schematool -initSchema -dbType derby
+
+8. **Verify**
 
 	Run Hadoop:
 
@@ -205,65 +276,9 @@
 
 		\> show tables; 
 
-<!-- 5. **Install Derby**
+## SPARK
 
-	Just as IN 1:
+...
 
-		$ wget http://archive.apache.org/dist/db/derby/db-derby-10.4.2.0/db-derby-10.4.2.0-bin.tar.gz
-
-
-	The rest is as follows. Target folder structure is /home/hadoop/derby/db-derby-10.4.2.0-bin
-
-6. **Alter PATH**
-
-	Add to the end of .bashrc:
-
-		export DERBY_HOME=/home/hadoop/derbry/db-derby-10.4.2.0-bin/
-		export PATH=$PATH:$DERBY_HOME/bin
-		export CLASSPATH=$CLASSPATH:$DERBY_HOME/lib/derby.jar:$DERBY_HOME/lib/derbytools.jar
-
-7. **Create folder 'data'**
-
-		$ mkdir $DERBY_HOME/data
-
-8. **Configure Hive**
-
-	Create:
-
-		$ cd $HIVE_HOME/conf
-		$ cp hive-default.xml.template hive-site.xml
-
-	Edit 'hive-site.xml' (add between conf):
-
-		<property>
-		<name>javax.jdo.option.ConnectionURL</name>
-		<value>jdbc:derby://localhost:1527/metastore_db;create=true </value>
-		<description>JDBC connect string for a JDBC metastore </description>
-		</property>
-
-	Create a file named 'jpox.properties and add to it':
-
-		javax.jdo.PersistenceManagerFactoryClass =
-
-		org.jpox.PersistenceManagerFactoryImpl
-		org.jpox.autoCreateSchema = false
-		org.jpox.validateTables = false
-		org.jpox.validateColumns = false
-		org.jpox.validateConstraints = false
-		org.jpox.storeManagerType = rdbms
-		org.jpox.autoCreateSchema = true
-		org.jpox.autoStartMechanismMode = checked
-		org.jpox.transactionIsolation = read_committed
-		javax.jdo.option.DetachAllOnCommit = true
-		javax.jdo.option.NontransactionalRead = true
-		javax.jdo.option.ConnectionDriverName = org.apache.derby.jdbc.ClientDriver
-		javax.jdo.option.ConnectionURL = jdbc:derby://hadoop1:1527/metastore_db;create = true
-		javax.jdo.option.ConnectionUserName = APP
-		javax.jdo.option.ConnectionPassword = mine -->
-
-# RUN WITH GRADLE
-
-
-
-# TEST 
+Better user scripts
 
