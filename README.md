@@ -227,7 +227,7 @@
 		</property>
 		<property>
 		<name>hive.metastore.uris</name>
-		<value/>
+		<value>thrift://localhost:9083<value/>
 		<description>Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.</description>
 		</property>
 		<property>
@@ -278,7 +278,32 @@
 
 ## SPARK
 
-...
+Installation is simple enough.
 
-Better user scripts
+## BUILD 
 
+Build with
+		 
+	$ gradle clean build
+
+## RUN 
+
+Before running make sure dfs and metastore are running.
+
+Do it by following:
+
+	$ start-dfs.sh
+
+	$ hive --service metastore
+
+Run with: 
+	
+	$ gradle run
+
+## Spark-RUN
+
+Use script:
+
+	$ ./run.sh N
+
+Where N is N of cores you are willing to give to spark.
